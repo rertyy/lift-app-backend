@@ -1,36 +1,63 @@
-def LOOK(requests, initial_position):
-    # Sort the requests in ascending order
-    sorted_requests = sorted(requests)
-    
+from random import randint
+from sortedcontainers import SortedSet
+
+def LOOK(sorted_requests: SortedSet[int], initial_position: int) -> list[int]:
+
     # Initialize variables
     current_floor = initial_position
-    direction = 1  # 1 for upward, -1 for downward
     
     # Tracks the floors to be visited in order
-    visited_floors = []
-    
+    visited_requests = []
+    travelled_floors = []
+    dir = 1
+
+    floor_index = sorted_requests.bisect(current_floor) - 1
+    if floor_index < 0:
+        dir = 1 # lift starts below (inclusive) first request
+    elif floor_index >= len(sorted_requests):
+        dir = -1 # lift starts above (inclusive) last request
+
     # Iterate until all requests are served
     while sorted_requests:
-        # find the floors to go up. I think ideally to change this to use treeset or something?
-        floor_index = sorted_requests.bisect(current_floor) - 1
-        if floor_index < 0 or floor_index >= len(sorted_requests):
-            floor_index = 0
+        # Track the floors travelled
+        travelled_floors.append(current_floor)
+
+        # Swap direction if outside the range of requests
+        if current_floor <= sorted_requests[0]:
+            dir = 1
+        elif current_floor >= sorted_requests[-1]:
+            dir = -1
+
         # Check if the current floor has a request
         if current_floor in sorted_requests:
-            print("Serving request at floor", current_floor)
+            # travels from indices of range(floor_index, len(sorted_requests)):
             sorted_requests.remove(current_floor)
-            visited_floors.append(current_floor)
-        
-        # Change direction if there are no more requests in the current direction
-        if not sorted_requests:
-            direction *= -1
+            visited_requests.append(current_floor)
         
         # Move to the next floor in the current direction
-        current_floor += direction
+        current_floor += dir
     
-    return visited_floors
+    print("visited_requests: ", visited_requests)
+    print("travelled_floors: ", travelled_floors)
+    return visited_requests
 
 
-requests = [98, 183, 37, 122, 14, 124, 65, 67]
-initial_position = 53
-LOOK(requests, initial_position)
+
+
+'''
+TODO:
+add logic to add to the treeset. Up logic and down logic for consumers such that there can be up consumer and down consumer at the same time
+Prob a treeset for up and a treeset for down, sorted by key on floorFrom
+Enable concurrency via locking/MQ
+
+'''
+requests = []
+maxfloor = 10
+numrequests = 10
+for _ in range(numrequests):
+    requests.append(randint(1, maxfloor))
+
+sorted_requests = SortedSet(requests)
+print(sorted_requests)
+initial_position = 6
+LOOK(sorted_requests, initial_position)
