@@ -1,6 +1,7 @@
 from random import randint
 from sortedcontainers import SortedSet
 
+
 def LOOK(sorted_requests: SortedSet[int], initial_position: int) -> list[int]:
 
     # Initialize variables
@@ -46,8 +47,8 @@ def LOOK(sorted_requests: SortedSet[int], initial_position: int) -> list[int]:
 
 '''
 TODO:
-add logic to add to the treeset. Up logic and down logic for consumers such that there can be up consumer and down consumer at the same time
-Prob a treeset for up and a treeset for down, sorted by key on floorFrom
+add logic to add to the skiplistset. Up logic and down logic for consumers such that there can be up consumer and down consumer at the same time
+Prob a skiplistset for up and a skiplistset for down, sorted by key on floorFrom
 Enable concurrency via locking/MQ
 
 '''

@@ -2,10 +2,6 @@ package main
 
 /*
  * TODO:
- * 1. Create a lift struct
- * 2. Create a lift controller struct
- * 3. Create a lift controller interface
- * 4. Create a lift controller implementation
  *
  * Accept floor numbers from user. If value in treeSet, ignore. Else, add to treeSet
  * User requests have a direction, startFloor, endFloor, startTime, endTime

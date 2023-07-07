@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/lift-app-backend.iml" filepath="$PROJECT_DIR$/.idea/lift-app-backend.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/lift-ts-backend.iml" filepath="$PROJECT_DIR$/.idea/lift-ts-backend.iml" />
     </modules>
   </component>
 </project>

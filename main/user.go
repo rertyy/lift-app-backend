@@ -2,7 +2,6 @@ package main
 
 import (
 	"fmt"
-	"math"
 	"math/rand"
 	"time"
 )
@@ -15,6 +14,10 @@ type userRequest struct {
 	endTime    int64
 }
 
+func (u userRequest) String() string {
+	return fmt.Sprintf("come: %d | go: %d | direction: %d | start: %d | end: %d\n", p.startFloor, p.endFloor, p.direction, p.startTime, p.endTime)
+}
+
 func newUserRequest(startFloor int, endFloor int, startTime int64) *userRequest {
 	var direction int
 	if startFloor == endFloor { // represents the case where user did not specify end floor
@@ -24,20 +27,15 @@ func newUserRequest(startFloor int, endFloor int, startTime int64) *userRequest 
 	} else {
 		direction = 1
 	}
-	fmt.Printf("come: %d | go: %d | direction: %d | start: %d\n", startFloor, endFloor, direction, startTime)
-	return &userRequest{
+	req := &userRequest{
 		startFloor: startFloor,
 		endFloor:   endFloor,
 		direction:  direction,
 		startTime:  startTime,
 	}
-}
+	fmt.Printf(req.String())
+	return req
 
-func (p userRequest) timeTakenForRequest() int64 {
-	if p.endTime != 0 {
-		return p.endTime - p.startTime
-	}
-	return int64(math.Inf(0)) // return positive infinity to mean request failed
 }
 
 func generateRandomUserRequest(maxFloor int) *userRequest {
